@@ -15,7 +15,9 @@ function App() {
   const [isMentor, setIsMentor] = useState(false);
   const [isDeveloper, setIsDeveloper] = useState(false);
 
-  const [userInput, setUserInput] = useState("");
+  const setUserInput = (query) => {
+    localStorage.setItem("query", query);
+  };
 
   const getUser = async () => {
     try {
@@ -40,35 +42,36 @@ function App() {
   };
 
   return (
-    <AppContext.Provider value={userInput}>
-      <div className="container">
-        <Routes>
-          <Route
-            exact
-            path="/"
-            element={
-              user ? (
-                <Home
-                  user={user}
-                  handleDeveloperClick={handleDeveloperClick}
-                  handleMentorClick={handleMentorClick}
-                />
-              ) : (
-                <Navigate to="/login" />
-              )
-            }
-          />
-          <Route
-            exact
-            path="/login"
-            element={user ? <Navigate to="/" /> : <Login />}
-          />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/developer" element={<Developer setUserInput={setUserInput}/>} />
-          <Route path="/mentor" element={<Mentor user={user} />} />
-        </Routes>
-      </div>
-    </AppContext.Provider>
+    <div className="container">
+      <Routes>
+        <Route
+          exact
+          path="/"
+          element={
+            user ? (
+              <Home
+                user={user}
+                handleDeveloperClick={handleDeveloperClick}
+                handleMentorClick={handleMentorClick}
+              />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+        <Route
+          exact
+          path="/login"
+          element={user ? <Navigate to="/" /> : <Login />}
+        />
+        <Route path="/signup" element={<Signup />} />
+        <Route
+          path="/developer"
+          element={<Developer setUserInput={setUserInput} />}
+        />
+        <Route path="/mentor" element={<Mentor />} />
+      </Routes>
+    </div>
   );
 }
 

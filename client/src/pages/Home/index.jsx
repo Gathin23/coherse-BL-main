@@ -8,11 +8,15 @@ function Home(props) {
     const handleDeveloperBtnClick = () => {
         props.handleDeveloperClick();
         navigate("/developer");
+        localStorage.setItem('devpicture', user.picture);
+        localStorage.setItem('devname', user.name);
     }
 
     const handleMentorBtnClick = () => {
         props.handleMentorClick();
         navigate("/mentor");
+        localStorage.setItem('picture', user.picture);
+        localStorage.setItem('name', user.name);
     }
 
     const logout = () => {

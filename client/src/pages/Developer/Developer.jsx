@@ -1,16 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import styles from "./styles.module.css";
-import { AppContext } from "../../context/AppContext";
+import "./developer.css";
 
 const Developer = (props) => {
-  const API_KEY = "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";
   const [query, setQuery] = useState("");
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const sharedQuery = useContext(AppContext);
+  const [devpicture, setDevPicture] = useState(null);
+  const [devname, setDevName] = useState(null);
 
   const fetchResult = async () => {
     const url = "https://api.openai.com/v1/chat/completions";
@@ -18,25 +17,24 @@ const Developer = (props) => {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        Authorization: `Bearer ${API_KEY}`,
+        Authorization: `Bearer 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`,
       },
       body: JSON.stringify({
         model: "gpt-3.5-turbo",
         messages: [
           {
             role: "user",
-            content: sharedQuery,
+            content: query,
           },
         ],
       }),
     };
-
     setLoading(true); // set loading to true
 
     try {
       const response = await fetch(url, options);
       const results = await response.json();
-      console.log(result)
+      console.log(result);
       setResult(results["choices"][0]["message"]["content"]);
     } catch (error) {
       console.error(error);
@@ -45,19 +43,53 @@ const Developer = (props) => {
     setLoading(false); // set loading back to false
   };
 
+  useEffect(() => {
+    const storedPicture = localStorage.getItem("devpicture");
+    const storedName = localStorage.getItem("devname");
+    setDevPicture(storedPicture);
+    setDevName(storedName);
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Submitted");
     console.log(query);
+    props.setUserInput(query);
     await fetchResult();
   };
 
   const handleChange = (e) => {
-    props.setUserInput(e.target.value);
-  }
+    setQuery(e.target.value);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("devname");
+    localStorage.removeItem("devpicture");
+    window.open(`${process.env.REACT_APP_API_URL}/auth/logout`, "_self");
+  };
 
   return (
     <div className={styles.wrapper}>
+      <nav className="navbar">
+        <div className="navbar-left">
+          <h2>Dashboard</h2>
+        </div>
+        <ul className="navbar-right">
+          <li>
+            <img
+              src={devpicture}
+              alt="Profile Pic"
+              className="number-profile-pic"
+            />
+          </li>
+          <li>
+            <h3 className="number-user-name">{devname}</h3>
+          </li>
+          <li>
+            <button>Logout</button>
+          </li>
+        </ul>
+      </nav>
       {/* User Input */}
       <div className={styles.user_input}>
         <form onSubmit={handleSubmit}>
@@ -65,10 +97,12 @@ const Developer = (props) => {
             type="text"
             placeholder="Enter your query"
             className={styles.input_field}
-            value={sharedQuery}
+            value={query}
             onChange={handleChange}
           />
-          <button type="submit" className={styles.btn}>Search</button>
+          <button type="submit" className={styles.btn}>
+            Search
+          </button>
         </form>
       </div>
       {/* Display Result */}
@@ -81,8 +115,12 @@ const Developer = (props) => {
               {result}
             </ReactMarkdown>
             <a href="https://www.spatial.io/s/Coherse-Meeting-Room-644beb62b5a8fb95ae80009f?share=8499940146633707102">
-              <input className={styles.btn} type="button" value="Connect with a Mentor" />
-            </a> 
+              <input
+                className={styles.btn}
+                type="button"
+                value="Connect with a Mentor"
+              />
+            </a>
           </>
         ) : (
           <div>Enter your query to get the result</div>

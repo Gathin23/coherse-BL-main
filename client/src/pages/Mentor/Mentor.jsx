@@ -1,19 +1,40 @@
-import React, { useContext, useState } from "react";
-import { AppContext } from "../../context/AppContext";
+import React, { useContext, useEffect, useState } from "react";
 
 import "./mentor.css";
 
 const Mentor = (props) => {
-  const user = props.user;
+  const [query, setQuery] = useState(null);
+  const [picture, setPicture] = useState(null);
+  const [name, setName] = useState(null);
   const [open, setOpen] = useState(false);
   const [acceptClicked, setAcceptClicked] = useState(false);
   const [rejectClicked, setRejectClicked] = useState(false);
-  const sharedQuery = useContext(AppContext);
   const handleAccept = () => {
     console.log("Accepted!");
-    window.open("https://www.spatial.io/s/Coherse-Meeting-Room-644beb62b5a8fb95ae80009f?share=8499940146633707102", "_blank");
+    window.open(
+      "https://www.spatial.io/s/Coherse-Meeting-Room-644beb62b5a8fb95ae80009f?share=8499940146633707102",
+      "_blank"
+    );
+    localStorage.removeItem("query");
     setOpen(false);
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem("name");
+    localStorage.removeItem("picture");
+    window.open(`${process.env.REACT_APP_API_URL}/auth/logout`, "_self");
+  };
+
+  useEffect(() => {
+    const storedPicture = localStorage.getItem("picture");
+    const storedData = localStorage.getItem("query");
+    const storedName = localStorage.getItem("name");
+    console.log(`Picture : ${picture}`);
+    console.log(`UseEffect : ${storedData}`);
+    setQuery(storedData);
+    setPicture(storedPicture);
+    setName(storedName);
+  }, []);
 
   const handleReject = () => {
     console.log("Rejected!");
@@ -21,6 +42,8 @@ const Mentor = (props) => {
       "Are you sure you want to reject this?"
     );
     if (confirmReject) {
+      setQuery(null);
+      localStorage.removeItem("query");
       setOpen(false);
     }
   };
@@ -30,49 +53,48 @@ const Mentor = (props) => {
   };
   return (
     <div className="dashboard">
-      {/* Left Side */}
-      <div className="dashboard-details">
-        {/* User Details */}
-        <div className="dashboard-user">
-          <img
-            src={user.picture}
-            alt="Profile Pic"
-            className="dashboard-profile-pic"
-          />
-          <h3 className="dashboard-user-name">{user.name}</h3>
+      <div className="number-container">
+        <div className="number-left">
+          <h2>Dashboard</h2>
         </div>
-
-        {/* Dashboard Details */}
-        <div className="dashboard-info">
-          <h2>Dashboard Details</h2>  
-          <p>Details go here...</p>
+        <div className="number-right">
+          <img src={picture} alt="Profile Pic" className="number-profile-pic" />
+          <h3 className="number-user-name">{name}</h3>
+          <button className="number-logout-btn" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
       </div>
       {/* Right Side */}
       <div className="dashboard-right">
         <div className="dashboard-query">
           {/* Query Title */}
-          <div className="dashboard-query-title">
-            <h2>{sharedQuery}</h2>
-          </div>
+          {query !== null ? (
+            <>
+              <div className="dashboard-query-title">
+                <h2>{query}</h2>
+              </div>
 
-          {/* Accept/Reject Buttons */}
-          <div className="dashboard-query-actions">
-            <button
-              className="dashboard-query-action-btn"
-              onClick={handleAccept}
-              disabled={acceptClicked || rejectClicked}
-            >
-              Accept
-            </button>
-            <button
-              className="dashboard-query-action-btn"
-              onClick={handleReject}
-              disabled={acceptClicked || rejectClicked}
-            >
-              Reject
-            </button>
-          </div>
+              <div className="dashboard-query-actions">
+                <button
+                  className="dashboard-query-action-btn"
+                  onClick={handleAccept}
+                  disabled={acceptClicked || rejectClicked}
+                >
+                  Accept
+                </button>
+                <button
+                  className="dashboard-query-action-btn"
+                  onClick={handleReject}
+                  disabled={acceptClicked || rejectClicked}
+                >
+                  Reject
+                </button>
+              </div>
+            </>
+          ) : (
+            <p>As of now there is no request...</p>
+          )}
 
           {/* Reject Popup */}
           {rejectClicked && (
