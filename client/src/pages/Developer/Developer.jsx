@@ -17,7 +17,7 @@ const Developer = (props) => {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        Authorization: `Bearer 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`,
+        Authorization: `Bearer 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`,
       },
       body: JSON.stringify({
         model: "gpt-3.5-turbo",
@@ -69,62 +69,60 @@ const Developer = (props) => {
   };
 
   return (
-    <div className={styles.wrapper}>
-      <nav className="navbar">
-        <div className="navbar-left">
+    <div className="dashboard">
+      <div className="number-container">
+        <div className="number-left">
           <h2>Dashboard</h2>
         </div>
-        <ul className="navbar-right">
-          <li>
-            <img
-              src={devpicture}
-              alt="Profile Pic"
-              className="number-profile-pic"
-            />
-          </li>
-          <li>
-            <h3 className="number-user-name">{devname}</h3>
-          </li>
-          <li>
-            <button>Logout</button>
-          </li>
-        </ul>
-      </nav>
-      {/* User Input */}
-      <div className={styles.user_input}>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Enter your query"
-            className={styles.input_field}
-            value={query}
-            onChange={handleChange}
+        <div className="number-right">
+          <img
+            src={devpicture}
+            alt="Profile Pic"
+            className="number-profile-pic"
           />
-          <button type="submit" className={styles.btn}>
-            Search
+          <h3 className="number-user-name">{devname}</h3>
+          <button className="number-logout-btn" onClick={handleLogout}>
+            Logout
           </button>
-        </form>
+        </div>
       </div>
-      {/* Display Result */}
-      <div className="result">
-        {loading ? (
-          <div>Loading...</div>
-        ) : result ? (
-          <>
-            <ReactMarkdown className="style.result" markPlugins={[gfm]}>
-              {result}
-            </ReactMarkdown>
-            <a href="https://www.spatial.io/s/Coherse-Meeting-Room-644beb62b5a8fb95ae80009f?share=8499940146633707102">
-              <input
-                className={styles.btn}
-                type="button"
-                value="Connect with a Mentor"
-              />
-            </a>
-          </>
-        ) : (
-          <div>Enter your query to get the result</div>
-        )}
+      <div className={styles.wrapper}>
+        {/* User Input */}
+        <div className={styles.user_input}>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Enter your query"
+              className={styles.input_field}
+              value={query}
+              onChange={handleChange}
+            />
+            <button type="submit" className={styles.btn}>
+              Search
+            </button>
+          </form>
+        </div>
+        {/* Display Result */}
+        <div className="result">
+          {loading ? (
+            <div>Loading...</div>
+          ) : result ? (
+            <>
+              <ReactMarkdown className="style.result" markPlugins={[gfm]}>
+                {result}
+              </ReactMarkdown>
+              <a target="_blank" href="https://www.spatial.io/s/Coherse-Meeting-Room-644beb62b5a8fb95ae80009f?share=8499940146633707102">
+                <input
+                  className={styles.btn}
+                  type="button"
+                  value="Connect with a Mentor"
+                />
+              </a>
+            </>
+          ) : (
+            <div>Enter your query to get the result</div>
+          )}
+        </div>
       </div>
     </div>
   );

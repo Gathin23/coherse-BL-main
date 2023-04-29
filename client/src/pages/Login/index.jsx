@@ -10,13 +10,13 @@ function Login() {
 	};
 	return (
 		<div className={styles.container}>
-			<h1 className={styles.heading}>Log in Form</h1>
+			<h1 className={styles.heading}>Log in</h1>
 			<div className={styles.form_container}>
 				<div className={styles.left}>
 					<img className={styles.img} src="./images/login.jpg" alt="login" />
 				</div>
 				<div className={styles.right}>
-					<h2 className={styles.from_heading}>Members Log in</h2>
+					<h2 className={styles.from_heading}>Log in to your account</h2>
 					<input type="text" className={styles.input} placeholder="Email" />
 					<input type="text" className={styles.input} placeholder="Password" />
 					<button className={styles.btn}>Log In</button>

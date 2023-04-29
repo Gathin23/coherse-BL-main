@@ -25,7 +25,10 @@ function Home(props) {
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.heading}>Home</h1>
+            <div className={styles.logo_container}>
+                <img alt='logo' src='./images/logo.png' className={styles.logo} />
+                <p>Instantly Connect with Experienced Developers</p>
+            </div>
             <div className={styles.form_container}>
                 <div className={styles.left}>
                     <img className={styles.img} src="./images/profile.jpg" alt="login" />

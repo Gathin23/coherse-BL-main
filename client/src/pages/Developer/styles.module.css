@@ -1,10 +1,15 @@
 .wrapper{
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: #fefae0;
+}
+
+.dashboard{
+    width: 100%;
 }
 
 .user_input{
@@ -33,6 +38,11 @@
     cursor: pointer;
 }
 
+.btn:hover{
+    background-color: #cea203;
+    transition: all 300ms;
+}
+
 .input_field:focus{
     outline: none;
     border: 1px solid rgb(0, 90, 193);
@@ -46,5 +56,15 @@
     margin: 0;
     font-size: 1.2rem;
     font-family: 'Courier New', Courier, monospace;
+}
+
+.number-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffeb67;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 

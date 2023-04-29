@@ -1,12 +1,15 @@
-.container {
-    width: 100vw;
+
+.container{
+    background-color: #d9e4f5;
+    background-image: linear-gradient(315deg, #d9e4f5 0%, #f5e3e6 74%);
+    width: 100%;
     height: 100vh;
-    background-color: #f0f8ff;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+
 .heading {
     font-size: 40px;
     font-weight: 600;
@@ -29,7 +32,7 @@
 
 .form_container {
     display: flex;
-    margin-top: 45px;
+    margin: 45px 0;
     width: 800px;
     height: 450px;
     background-color: white;
@@ -46,10 +49,9 @@
 }
 
 .img {
-    width: 160%;
-    position: absolute;
-    left: -125px;
-    top: -50px;
+    width: 100%;
+    height: 107%;
+    object-fit: cover;
 }
 
 .right {
@@ -76,6 +78,13 @@
     border: 1px solid #2c444e;
     border-radius: 2px;
     font-size: 13px;
+    box-sizing: border-box;
+    padding: 0 5px;
+}
+
+.input:focus{
+    outline: none;
+    border: 1.5px solid rgb(37, 37, 189);
 }
 
 .btn {
@@ -89,6 +98,11 @@
     outline: none;
     border: none;
     cursor: pointer;
+}
+
+.btn:hover{
+    background-color: #cea203;
+    transition: all 300ms;
 }
 
 .text {
