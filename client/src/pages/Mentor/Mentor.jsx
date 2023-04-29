@@ -11,7 +11,7 @@ const Mentor = (props) => {
   const sharedQuery = useContext(AppContext);
   const handleAccept = () => {
     console.log("Accepted!");
-    window.open("https://www.youtube.com", "_blank");
+    window.open("https://www.spatial.io/s/Coherse-Meeting-Room-644beb62b5a8fb95ae80009f?share=8499940146633707102", "_blank");
     setOpen(false);
   };
 

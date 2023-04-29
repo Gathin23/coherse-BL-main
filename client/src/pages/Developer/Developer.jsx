@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 import { AppContext } from "../../context/AppContext";
 
 const Developer = (props) => {
-  const API_KEY = "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";
+  const API_KEY = "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";
   const [query, setQuery] = useState("");
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
@@ -36,6 +36,7 @@ const Developer = (props) => {
     try {
       const response = await fetch(url, options);
       const results = await response.json();
+      console.log(result)
       setResult(results["choices"][0]["message"]["content"]);
     } catch (error) {
       console.error(error);
@@ -80,8 +81,8 @@ const Developer = (props) => {
               {result}
             </ReactMarkdown>
             <a href="https://www.spatial.io/s/Coherse-Meeting-Room-644beb62b5a8fb95ae80009f?share=8499940146633707102">
-              <input type="button" value="Connect with a Mentor" />
-            </a>
+              <input className={styles.btn} type="button" value="Connect with a Mentor" />
+            </a> 
           </>
         ) : (
           <div>Enter your query to get the result</div>
